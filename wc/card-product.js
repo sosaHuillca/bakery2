@@ -54,6 +54,7 @@ img { width: 100%; height:100%; }
    grid-template-columns:1fr 1fr;
    place-items: center;
    padding:10px;
+   background: #333;
 }
 
 .title-producto{
@@ -84,6 +85,7 @@ img { width: 100%; height:100%; }
 .content-descripcion{
    grid-column:1/-1;
   grid-row:3/4;
+
 }
 
 .title-precio{
@@ -111,6 +113,13 @@ img { width: 100%; height:100%; }
 h3,h2 { margin-top:0; }
 p{margin-top:0;}
 
+.content-product{
+  width: 90%;
+  margin: auto;
+  border: 1px solid;
+  border-radius: 20px;
+  overflow: hidden;
+}
 </style>
       <article class="content-product">
 	 <header class="head-product">
@@ -133,7 +142,11 @@ p{margin-top:0;}
       <p class="title-precio"><strong>Precio:</strong>
 	 <span class="number-precio">s/. ${precio}</span>
       </p>
-	    <btn-add class="btn-agregar" cantidad="${cantidad}"></btn-add>
+	    <btn-add
+      storageName="${this.getAttribute("nameStorage")}" 
+      cantidad="${this.getAttribute("cantidad")}"
+      di="${this.getAttribute("di")}"
+	    class="btn-agregar" cantidad="${cantidad}"></btn-add>
 	 </section>
       </article>
    `;

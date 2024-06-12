@@ -31,9 +31,15 @@ listSaveItem.classList.toggle("ocultar")
 /*mostrar todos los productos*/
 callProduct().then(productos => {
     list.innerHTML = productos.map(producto =>{
-      return `<mi-item imagen="${producto.imagen}" storageName="${bd_local}"name="${producto.nombre}" di=${producto.id} cantidad=0></mi-item>`
+      return `<mi-item
+       imagen="${producto.imagen}"
+       storageName="${bd_local}"
+       name="${producto.nombre}"
+       di=${producto.id}
+       cantidad=0
+	></mi-item>`
    }).join("");
-})
+});
 
 /* <btn-add>*/
 document.body.addEventListener("productoEnviado", e => {
@@ -64,19 +70,22 @@ document.body.addEventListener("productoEnviado", e => {
 })
 
 document.body.addEventListener("verProducto", e => {
-   list.classList.toggle("ocultar")
+   //list.classList.toggle("ocultar")
+   //carrito.classList.toggle("ocultar")
    view.classList.toggle("ocultar")
-   carrito.classList.toggle("ocultar")
 
    callProduct().then(productos => {
       const product = productos.filter(product => product.id == e.detail.id)
       view.innerHTML = product.map(card => {
 	 return `<card-product
 		 nombre="${card.nombre}"
+		 storage="${bd_local}"
 		  precio="${card.precio}"
 		  categoria="${card.categoria}"
 		  descripcion="${card.descripcion}"
 		  imagen="${card.imagen}"
+		  cantidad=0
+		  di="${card.id}"
 		  >
 		  <i slot="btn-cerrar" class="fa-solid fa-xmark"></i>
 	    </card-product>`
@@ -85,9 +94,9 @@ document.body.addEventListener("verProducto", e => {
 });
 
 document.body.addEventListener("btnCerrarCardProduct", e => {
-   list.classList.toggle(e.detail.clase)
+   //list.classList.toggle(e.detail.clase)
    view.classList.toggle(e.detail.clase)
-   carrito.classList.toggle(e.detail.clase)
+   //carrito.classList.toggle(e.detail.clase)
 });
 
 document.body.addEventListener("btnMostrarSaveItem", e => {
