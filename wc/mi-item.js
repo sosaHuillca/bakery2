@@ -3,19 +3,29 @@ import "./btn-show.js";
 window.customElements.define('mi-item',
    class WebComponent extends HTMLElement {
 
-      static get observedAttributes(){ return ["imagen","name","di","cantidad","nameStorage"] }
+      static get observedAttributes(){ return ["precio","imagen","name","di","cantidad","nameStorage"] }
 
       constructor(){super(); this.attachShadow({mode:'open'});
 	 let name = this.getAttribute("name");
 	 let id = this.getAttribute("di");
+	 let precio = this.getAttribute("precio");
 	 let imagen = this.getAttribute("imagen");
 	 let listImagen = imagen.split(",")
 	 this.shadowRoot.innerHTML =  `
 <style>
 img { width: 100%; height:75px; }
 .contendor{
-   border:1px solid white;
-   padding:11px;
+     box-sizing:border-box;
+   display: grid;
+  gap: 15px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7); 
+}
+.contendor.action{
+   border: 2px solid green;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra oscura */
+        //transition: border 0.3s ease, box-shadow 0.3s ease; /* Transición suave */
 }
 .cont-btns{
    display:flex;
@@ -26,14 +36,18 @@ section{
 }
 span{
    display:inline-block;
-   height:40px;
 }
+p{
+margin:0;
+}
+
 </style>
 
 <div id=${id} class="contendor">
    <section>
       <img id="imgMain" src="imagenes/${listImagen[0]}"/>
       <span>${name}</span>
+      <p>s/. ${precio}</p>
    </section>
 
    <div class="cont-btns">
@@ -58,6 +72,12 @@ span{
 	       composed: true
 	    }))
 	    })
+	 this.shadowRoot.querySelector("btn-add").addEventListener("productoEnviado", e =>{
+	    this.shadowRoot.querySelector(".contendor").classList.add("action");
+	    setTimeout(()=>{
+	       this.shadowRoot.querySelector(".contendor").classList.remove("action") 
+	    },500)
+	 })
       }
 
    })

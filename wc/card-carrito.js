@@ -19,10 +19,14 @@ window.customElements.define('card-carrito',
 div{
    display: flex;
   align-items: center;
-  justify-content: space-around;
-  box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
-  padding:10px;
   position:relative;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  box-sizing: border-box;
+  width: 98%;
+  padding:10px;
+  margin-left:auto;
+  margin-right:auto;
 }
 input{
    width:35px;
@@ -32,27 +36,32 @@ input{
 button{
    font-size:1.5rem;
    min-width: 35px;
-   background:blue;
+   background:darkolivegreen;
    color:white;
 }
 .nombre_precio{
    display:grid;
-   width:100px;
+   width:120px;
 }
 .nombre{
-   color: #444;
    font-family:sans-serif;
+   font-size: .8rem;
+   text-align: center;
 }
 .precio{
-   font-size:1.1rem;
+   font-size:.8rem;
+   display: inline-block;
+  width: 100px;
+  text-align: center;
+    color: teal;
 }
 
 button{
-   border-radius:50%;
+   border-radius:10px;
    border:none;
 }
 .cambiar_cantidad{
-   width:140px;
+   width:120px;
    display: flex;
    justify-content: space-between;
 }
@@ -60,17 +69,21 @@ button{
    text-align:center;
 }
 #del{
-  background:red; 
+   border-radius:50%;
+  background:brown; 
   position: absolute;
-  right: 1px;
-  top: -13px;
+  right: 4px;
+  top: -18px;
+}
+#total{
+   font-size:1rem;
 }
 </style>
 
 <div class="list" id="${this.id}">
    <section class="nombre_precio">
       <span class="nombre">${this.nombre}</span>
-      <span class="precio">${this.precio}</span>
+      <span class="precio">precio s/. ${this.precio}</span>
    </section>
    <section class="cambiar_cantidad">
       <button id="minus">-</button>

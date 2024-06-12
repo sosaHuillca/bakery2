@@ -11,11 +11,19 @@ window.customElements.define('btn-add',
 button{
    padding:7px;
    display:inline-block;
-   width:80px;
+   width:100px;
+   border:none;
+   border-radius:15px;
+   margin-bottom:10px;
+   font-size:1.02rem;
+}
+button.action{
+   background:green; 
+   color:white;
 }
 </style>
 
-<button id="${di}">add</button>
+<button id="${di}">agregar</button>
    `;
    }
 
@@ -45,6 +53,12 @@ button{
 	       bubbles: true,
 	       composed: true
 	    }))
+	    this.shadowRoot.querySelector("button").classList.add("action");
+	    this.shadowRoot.querySelector("button").textContent = "se agrego!";
+	    setTimeout(()=>{
+	       this.shadowRoot.querySelector("button").classList.remove("action") 
+	       this.shadowRoot.querySelector("button").textContent = "agregar"
+	    },500)
 	 });
    }
 

@@ -8,7 +8,6 @@ const url = "./db_products.json";
 const bd_local = "storage";
 
 const query = e => document.querySelector(e);
-//const ev_Body = e => document.body(e,f)
 
 async function callProduct(){
    try {
@@ -30,8 +29,9 @@ listSaveItem.classList.toggle("ocultar")
 
 /*mostrar todos los productos*/
 callProduct().then(productos => {
-    list.innerHTML = productos.map(producto =>{
+   list.innerHTML = productos.map(producto =>{
       return `<mi-item
+      precio="${producto.precio}"
        imagen="${producto.imagen}"
        storageName="${bd_local}"
        name="${producto.nombre}"
@@ -70,9 +70,8 @@ document.body.addEventListener("productoEnviado", e => {
 })
 
 document.body.addEventListener("verProducto", e => {
-   //list.classList.toggle("ocultar")
-   //carrito.classList.toggle("ocultar")
    view.classList.toggle("ocultar")
+   document.body.style.overflow = "hidden"
 
    callProduct().then(productos => {
       const product = productos.filter(product => product.id == e.detail.id)
@@ -94,16 +93,15 @@ document.body.addEventListener("verProducto", e => {
 });
 
 document.body.addEventListener("btnCerrarCardProduct", e => {
-   //list.classList.toggle(e.detail.clase)
    view.classList.toggle(e.detail.clase)
-   //carrito.classList.toggle(e.detail.clase)
+   document.body.style.overflow = "visible"
 });
 
 document.body.addEventListener("btnMostrarSaveItem", e => {
    listSaveItem.classList.toggle("ocultar")
    list.classList.toggle("ocultar")
    renderSaveItemsTEMPORAL()
-   });
+});
 
 query("#cerarVentana").addEventListener("click", e => {
    document.querySelector("#canvaSaveItems").innerHTML="<p>No hay productos</p>"
@@ -113,22 +111,59 @@ query("#cerarVentana").addEventListener("click", e => {
    localStorage.setItem(bd_local,JSON.stringify(dbstorage));
    let total = dbstorage.reduce((subtotal, i) => subtotal + i.cantidad,0);
    query("btn-carrito").setAttribute("cantidad",total);
-/*mostrar todos los productos*/
-callProduct().then(productos => {
-    list.innerHTML = productos.map(producto =>{
-      return `<mi-item imagen="${producto.imagen}" storageName="${bd_local}"name="${producto.nombre}" di=${producto.id} cantidad=0></mi-item>`
-   }).join("");
-})
+   /*mostrar todos los productos*/
+   callProduct().then(productos => {
+      list.innerHTML = productos.map(producto =>{
+	 return `<mi-item precio="${producto.precio}" imagen="${producto.imagen}" storageName="${bd_local}"name="${producto.nombre}" di=${producto.id} cantidad=0></mi-item>`
+      }).join("");
    })
+})
 
 /* actualizar carrito al cargar la pagina*/
 document.addEventListener("DOMContentLoaded", e => {
    let dbstorage = JSON.parse(localStorage.getItem(bd_local)) || []
    let total = dbstorage.reduce((subtotal, i) => subtotal + i.cantidad,0);
-   query("btn-carrito").setAttribute("cantidad",total);
+   let btnCarrito = query("btn-carrito");
+   btnCarrito.setAttribute("cantidad",total);
+   let cantidadItems = btnCarrito.getAttribute("cantidad")
+
+   if(total === '0'){
+      query("btn-carrito").display = "none"
+   }
 
 })
 
+async function formarProducto_pagar(){
+   let dbstorage = JSON.parse(localStorage.getItem(bd_local)) || []
+   let productosA_pagar = [];
+   try {
+      let productos = await callProduct();
+      for(let i = 0; i < productos.length; i++){
+	 for(let j = 0; j < dbstorage.length; j++){
+	    let productId = +productos[i].id;
+	    let dbstorageId = +dbstorage[j].id;
+
+	    if(productId === dbstorageId){
+	       let precio = productos[i].precio;
+	       let cantidad = dbstorage[j].cantidad;
+	       let total = precio * cantidad;
+	       let product = {
+		  "id":productos[i].id,
+		  "precio":productos[i].precio,
+		  "nombre":productos[i].nombre,
+		  "cantidad":dbstorage[j].cantidad,
+		  "total":total
+	       };
+	       productosA_pagar.push(product);
+	       break;
+	    }
+	 }
+      }
+   } catch(e){
+
+   }
+   return productosA_pagar;
+}
 function renderSaveItemsTEMPORAL(){
    let dbstorage = JSON.parse(localStorage.getItem(bd_local)) || []
    let result = [];
@@ -166,13 +201,54 @@ precio="${product.precio}"></card-carrito>`).join(" ");
 
       /*total a pagar de elementos en el carrito*/
       let tagTotal = totalCardsCarrito(result)
-      query("#canvaSaveItems").appendChild(tagTotal)
+
+      let btnWhatsapp = document.createElement("a");
+      btnWhatsapp.classList.add("btnWhatsapp")
+      btnWhatsapp.id = "btnWhatsapp";
+      btnWhatsapp.textContent = "pedir por whatsapp";
+
+      (async function(){
+	 await crearUrlPago(btnWhatsapp)
+      })()
+
+      document.querySelector("#canvaSaveItems").appendChild(tagTotal)
    });
 }
+async function creandoTemplate(){
+   const productos = await formarProducto_pagar()
+   stringTotal_whatsapp = productos.map(product => {
+      let precio = product.precio;
+      let cantidad = product.cantidad;
+      let nombre = product.nombre;
+      total+= precio*cantidad;
+      return `%0A*${nombre}%28${precio*cantidad}%29`
+   }).join("")
+   return productos;
+}
+async function crearUrlPago(btn){
+      let btnWhatsapp = document.createElement("a");
+      btnWhatsapp.classList.add("btnWhatsapp")
+      btnWhatsapp.id = "btnWhatsapp";
+      btnWhatsapp.textContent = "pedir por whatsapp";
+      let numeroTelefonico = "923909419";
+   let total = 0;
+   let stringTotal_whatsapp;
+   const productos = await formarProducto_pagar()
+   stringTotal_whatsapp = productos.map(product => {
+      let precio = product.precio;
+      let cantidad = product.cantidad;
+      let nombre = product.nombre;
+      total+= precio*cantidad;
+      return `%0A*${nombre}%28${precio*cantidad}%29`
+   }).join("")
 
+   btn.setAttribute("href",`whatsapp://send?phone=+51${numeroTelefonico}&text=${stringTotal_whatsapp}%0ATotal=${total.toFixed(2)}`);
+      document.querySelector("#canvaSaveItems").appendChild(btn)
+   
+}
 function totalCardsCarrito(result){
    const tagTotal = document.createElement("p");
-   tagTotal.textContent = "Total = ";
+   tagTotal.textContent = "Total = s/. ";
    tagTotal.classList.add("carritoTotal");
 
    let arrayTotal = result.reduce((subtotal, i) => subtotal + i.cantidad,0);
@@ -186,7 +262,6 @@ function totalCardsCarrito(result){
    tagTotal.innerText += miTotal.toFixed(2);
    return tagTotal;
 }
-renderSaveItemsTEMPORAL()
 
 const uploaderStorage = item => {
    let dbstorage = JSON.parse(localStorage.getItem(bd_local)) || []
@@ -225,14 +300,20 @@ function sumarSubtotal(){
 document.body.addEventListener("sumandoCantidad", e => {
    uploaderStorage({"id":e.detail.id, "cantidad":e.detail.cantidad});
    sumarSubtotal();
+      let btn = document.querySelector("#btnWhatsapp")
+      crearUrlPago(btn)
 });
 document.body.addEventListener("restandoCantidad", e => {
    uploaderStorage({"id":e.detail.id, "cantidad":e.detail.cantidad});
    sumarSubtotal();
+      let btn = document.querySelector("#btnWhatsapp")
+      crearUrlPago(btn)
 });
 document.body.addEventListener("editandoCantidad", e => {
    uploaderStorage({"id":e.detail.id, "cantidad":e.detail.cantidad});
    sumarSubtotal();
+      let btn = document.querySelector("#btnWhatsapp")
+      crearUrlPago(btn)
 });
 
 document.body.addEventListener("delCardCarrito", e => {
@@ -243,7 +324,7 @@ document.body.addEventListener("delCardCarrito", e => {
    // Si es -1, eliminarlo
    if (indice !== -1) {
       dbstorage.splice(indice, 1);
-   let cards = [...document.querySelectorAll("card-carrito")];
+      let cards = [...document.querySelectorAll("card-carrito")];
       cards.forEach(card => {
 	 if(card.id === id) card.remove()
       })
@@ -254,5 +335,7 @@ document.body.addEventListener("delCardCarrito", e => {
       }
       localStorage.setItem(bd_local,JSON.stringify(dbstorage));
       sumarSubtotal();
+      let btn = document.querySelector("#btnWhatsapp")
+      crearUrlPago(btn)
    }
 })

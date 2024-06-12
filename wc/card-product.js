@@ -54,7 +54,7 @@ img { width: 100%; height:100%; }
    grid-template-columns:1fr 1fr;
    place-items: center;
    padding:10px;
-   background: #333;
+   background: white;
 }
 
 .title-producto{
@@ -101,8 +101,15 @@ img { width: 100%; height:100%; }
 }
 #borrar{
    position: absolute;
-   width:40px;
-   font-size: 1.3rem;
+  width: 50px;
+  font-size: 1.3rem;
+  border-radius: 50%;
+  border: none;
+  height: 50px;
+  top: 5px;
+  left: 5px;
+  background:brown; 
+  color:white;
 }
 
 .number-precio{
@@ -116,7 +123,6 @@ p{margin-top:0;}
 .content-product{
   width: 90%;
   margin: auto;
-  border: 1px solid;
   border-radius: 20px;
   overflow: hidden;
 }
