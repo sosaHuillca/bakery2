@@ -1,0 +1,119 @@
+{
+  "productos": [
+    {
+      "id": 1,
+      "nombre": "chifon de naranja",
+      "precio": 19.50,
+      "imagen": ["chifon-naranja-1.avif","chifon-naranja-2.jpg","chifon-naranja-3.jpg","chifon-naranja-4.webp","chifon-naranja-5.webp"],
+      "descripcion": "Chifón de naranja es un postre ligero y esponjoso con un sabor refrescante a naranja. Esta delicia se caracteriza por su textura suave y aireada, similar a un bizcocho, pero con un toque cítrico distintivo.",
+      "categoria": "keke",
+      "disponible": true
+    },
+    {
+      "id": 2,
+      "nombre": "rosquita de anis",
+      "precio": 1.00,
+      "imagen": [
+	 "rosquitas-1.webp",
+	 "rosquitas-2.jpg",
+	 "roquitas-3.jpg",
+	 "rosquitas-4.jpg",
+	 "rosquitas-5.webp"
+      ],
+      "descripcion": "Deliciosa rosquita con sabor a anís, perfecta para acompañar un café o té. Su textura es crujiente por fuera y suave por dentro, y su aroma a anís le da un toque único y reconfortante.",
+      "categoria": "bocadito",
+      "disponible": true
+    },
+    {
+      "id": 3,
+      "nombre": "pay de manzana",
+      "precio": 11.99,
+      "imagen": [
+	 "pay-1.jpg",
+	 "pay-2.webp",
+	 "pay-3.webp",
+	 "pay-4.jpg",
+	 "pay-5.webp"
+      ],
+    "descripcion": "El pay de manzana es un postre clásico que consiste en una base de masa quebrada o masa de hojaldre, rellena con una mezcla de manzanas cortadas en rodajas finas y sazonadas con canela, azúcar y a veces pasas.",
+      "categoria": "postre",
+      "disponible": true
+    },
+    {
+      "id": 4,
+      "nombre": "torta tres leches",
+      "precio": 21.99,
+      "imagen": [
+	 "tres-leches-1.jpg",
+	 "tres-leches-2.jpg",
+	 "tres-leches-3.jpg",
+	 "tres-leches-4.jpg",
+	 "tres-leches-5.webp"
+      ],
+    "descripcion": "El pay de manzana es un postre clásico que consiste en una base de masa quebrada o masa de hojaldre, rellena con una mezcla de manzanas cortadas en rodajas finas y sazonadas con canela, azúcar y a veces pasas.",
+      "categoria": "torta",
+      "disponible": true
+    },
+    {
+      "id": 5,
+      "nombre": "alfajor de maicena",
+      "precio": 1.99,
+      "imagen": [
+	 "alfajor-1.jpg",
+	 "alfajor-2.jpg",
+	 "alfajor-3.jpg",
+	 "alfajor-4.jpg",
+	 "alfajor-5.jpg"
+      ],
+    "descripcion": "Entra en el mundo de los alfajores y descubre una experiencia de sabor que nunca olvidarás. Con su irresistible combinación de texturas y sabores, estos dulces son mucho más que un simple bocado.",
+      "categoria": "postre",
+      "disponible": true
+    },
+    {
+      "id": 6,
+      "nombre": "mil hojas",
+      "precio": 2.99,
+      "imagen": [
+	 "mil-hojas-1.jpg",
+	 "mil-hojas-2.jpg",
+	 "mil-hojas-3.jpge",
+	 "mil-hojas-4.jpg",
+	 "mil-hojas-5.jpg"
+      ],
+    "descripcion": "El mil hojas es una exquisita tentación de repostería que seduce con su delicada y crujiente masa hojaldrada, rellena de cremosa crema pastelera y coronada con una capa de azúcar glas.",
+      "categoria": "postre",
+      "disponible": true
+    },
+    {
+      "id": 7,
+      "nombre": "keke vainilla",
+      "precio": 15.99,
+      "imagen": [
+	 "keke-1.jpg",
+	 "keke-2.jpg",
+	 "keke-3.jpg",
+	 "keke-4.png",
+	 "keke-5.webp"
+      ],
+    "descripcion": "El keke de vainilla es un placer simple y reconfortante que evoca recuerdos de hogar y momentos compartidos. Con su aroma tentador y su suave textura, este delicioso bizcocho se deshace en la boca, revelando el sutil sabor de la vainilla en cada bocado.",
+      "categoria": "keke",
+      "disponible": true
+    },
+    {
+      "id": 8,
+      "nombre": "leche asada",
+      "precio": 1.99,
+      "imagen": [
+	 "leche-asada-1.jpg",
+	 "leche-asada-2.jpg",
+	 "leche-asada-3.jpg",
+	 "leche-asada-4.jpg",
+	 "leche-asada-5.jpg"
+      ],
+    "descripcion": "La leche asada es un postre tradicional que deleita con su suave textura cremosa y su sabor delicadamente dulce. Preparada con una mezcla de leche, azúcar y huevos, esta delicia se cuece lentamente al horno hasta alcanzar una consistencia firme y dorada en la superficie.",
+      "categoria": "postre",
+      "disponible": true
+    }
+
+  ]
+}

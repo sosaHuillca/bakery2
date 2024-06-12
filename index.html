@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Eventos WC</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+   <header>
+      <btn-carrito>
+	 <i slot="icon" class="fa-solid fa-cart-shopping"></i>
+      </btn-carrito>
+   </header>
+   <main>
+      <section id="list"></section>
+      <section id="view">
+	 <p>presionar enter para ver detalles del producto</p>
+      </section>
+      <section id="save">
+	 <button id="cerarVentana"><i class="fa-solid fa-trash"></i></button>
+	 <section id="canvaSaveItems">No hay productos en el carrito</section>
+      </section>
+   </main>
+
+   <script type="module" src="./app.js"></script>
+</body>
+</html>
+

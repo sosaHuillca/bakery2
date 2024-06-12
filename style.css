@@ -1,0 +1,65 @@
+:root{
+   --display: block;
+}
+body{
+   background-color:#333;
+   color:#fff;
+}
+
+#list{
+   display:grid;
+   grid-template-columns:repeat(auto-fit,minmax(100px,1fr));
+   gap:10px;
+}
+
+#list{
+   grid-column:1/2;
+   grid-row:2/3;
+}
+
+btn-carrito.ocultar,
+#view.ocultar,
+#save.ocultar,
+#list.ocultar{ 
+   --display:none;
+   display:var(--display); }
+
+#view.mostrar,
+#save.mostrar,
+#list.mostrar{ 
+   --display:none;
+display:var(--display); }
+
+.carritoTotal {
+   text-align:right;
+   font-size:1.3rem;
+   border:3px solid greenyellow;
+
+   /*
+   position: fixed;
+  bottom: -10px;
+  right: 0;
+  width: 100%;
+  */
+  height: 50px;
+  background: black;
+}
+
+#save{
+   position:relative;
+
+}
+#save button{
+   position: absolute;
+   width:50px;
+   height:40px;
+   font-size:1.3rem;
+   right:10px;
+   top:-65px;
+}
+
+#canvaSaveItems{
+   display:grid;
+   gap:20px;
+   margin-top:20px;
+}
