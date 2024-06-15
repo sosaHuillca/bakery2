@@ -1,9 +1,10 @@
 import "./btn-add.js";
+import "./btn-add-storage.js";
 import "./btn-show.js";
 window.customElements.define('mi-item',
    class WebComponent extends HTMLElement {
 
-      static get observedAttributes(){ return ["precio","imagen","name","di","cantidad","nameStorage"] }
+      static get observedAttributes(){ return ["precio","imagen","name","di","cantidad","storage"] }
 
       constructor(){super(); this.attachShadow({mode:'open'});
 	 let name = this.getAttribute("name");
@@ -51,11 +52,11 @@ margin:0;
    </section>
 
    <div class="cont-btns">
-      <btn-add 
-      storageName="${this.getAttribute("nameStorage")}" 
+      <btn-add-storage
+      db_name="${this.getAttribute("storage")}" 
       cantidad="${this.getAttribute("cantidad")}"
       di="${this.getAttribute("di")}"
-      ></btn-add>
+      ></btn-add-storage>
    </div>
 </div>
    `;
@@ -72,7 +73,7 @@ margin:0;
 	       composed: true
 	    }))
 	    })
-	 this.shadowRoot.querySelector("btn-add").addEventListener("productoEnviado", e =>{
+	 this.shadowRoot.querySelector("btn-add-storage").addEventListener("updateCantidadStorage", e =>{
 	    this.shadowRoot.querySelector(".contendor").classList.add("action");
 	    setTimeout(()=>{
 	       this.shadowRoot.querySelector(".contendor").classList.remove("action") 

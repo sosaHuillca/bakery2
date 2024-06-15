@@ -2,7 +2,7 @@ window.customElements.define('card-carrito',
    class WebComponent extends HTMLElement {
 
       static get observedAttributes(){ 
-	 return ["nombre","di","cantidad","precio","total"] 
+	 return ["nombre","di","cantidad","precio","total","db_name"] 
       }
 
       constructor(){super(); this.attachShadow({mode:'open'});
@@ -12,7 +12,6 @@ window.customElements.define('card-carrito',
 	 this.cantidad = +get("cantidad");
 	 this.precio = +get("precio")
 	 this.total = +get("total")
-	 //this.total = this.cantidad * this.precio; 
 
 	 this.shadowRoot.innerHTML =  `
 <style>
@@ -23,10 +22,9 @@ div{
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
   border-radius: 10px;
   box-sizing: border-box;
-  width: 98%;
   padding:10px;
-  margin-left:auto;
-  margin-right:auto;
+  width:95%;
+  justify-content: space-around;
 }
 input{
    width:35px;
@@ -85,12 +83,11 @@ button{
       <span class="nombre">${this.nombre}</span>
       <span class="precio">precio s/. ${this.precio}</span>
    </section>
-   <section class="cambiar_cantidad">
-      <button id="minus">-</button>
-      <input id="value" value="${this.cantidad}" type="number" />
-      <button id="add">+</button>
-   </section>
-   <span id="total" class="precio">s./${this.total.toFixed(2)}</span>
+   <multi-precios di="${this.id}"
+   cantidad="${this.cantidad}"
+   precio="${this.precio}"
+   db_name="${this.getAttribute("db_name")}"
+   ></multi-precios>
    <button id="del">x</button>
 </div>
    `;
@@ -98,83 +95,14 @@ button{
       }
 
       connectedCallback(){
-	 this.shadowRoot.addEventListener("click",e =>{
-	    switch(e.target.id){
-	       case "minus":
-		  if(this.cantidad <= 0){
-		     this.shadowRoot.querySelector("#total").textContent = 0;
-		     this.setAttribute("total",this.total);
-		     this.setAttribute("cantidad",this.cantidad)
-		  }else{
-		     this.cantidad--
-		     this.total = this.cantidad * this.precio;
-		     this.shadowRoot.querySelector("#value").value = this.cantidad;
-		     this.shadowRoot.querySelector("#total").textContent = this.total.toFixed(2);
-		     this.setAttribute("total",this.total);
-		     this.setAttribute("cantidad",this.cantidad)
-		     this.dispatchEvent(new CustomEvent("restandoCantidad", {
-			detail: {
-			   "id": this.getAttribute("di"),
-			   "cantidad": this.cantidad,
-			   "total":this.total
-			},
-			bubbles: true,
-			composed: true
-		     }))
-		  }
-		  break;
-	       case "add":
-		  this.cantidad++
-		  this.total = this.cantidad * this.precio;
-		  this.shadowRoot.querySelector("#value").value = this.cantidad;
-		  this.shadowRoot.querySelector("#total").textContent = this.total.toFixed(2);
-		  this.setAttribute("total",this.total);
-		  this.setAttribute("cantidad",this.cantidad)
-		  this.dispatchEvent(new CustomEvent("sumandoCantidad", {
-		     detail: {
-			"id": this.getAttribute("di"),
-			"cantidad": this.cantidad,
-			   "total":this.total
-		     },
-		     bubbles: true,
-		     composed: true
-		  }))
-		  break;
-	       default:
-		  break;
-	    }
-	 })
-
-	 this.shadowRoot.querySelector("input").
-	    addEventListener("input", e => {
-	       this.cantidad = +(this.shadowRoot.querySelector("#value").value);
-	       this.total = this.cantidad * this.precio;
-	       this.shadowRoot.querySelector("#value").value = this.cantidad;
-	       this.setAttribute("total",this.total);
-	       this.setAttribute("cantidad",this.cantidad)
-	       this.shadowRoot.querySelector("#total").textContent = this.total.toFixed(2);
-
-	       this.dispatchEvent(new CustomEvent("editandoCantidad", {
-		  detail: {
-		     "id": this.id,
-		     "cantidad": this.cantidad,
-			   "total":this.total
-		  },
-		  bubbles: true,
-		  composed: true
-	       }))
-	    })
-
 	 this.shadowRoot.querySelector("#del").
 	    addEventListener("click", e => {
-	       this.dispatchEvent(new CustomEvent("delCardCarrito", {
-		  detail: {
-		     "id": this.id,
-			   "total":this.total
-		  },
-		  bubbles: true,
-		  composed: true
-	       }))
+	       let dbstorage = JSON.parse(localStorage.getItem(this.getAttribute("db_name"))) || [];
+	       const indice = dbstorage.findIndex(objeto => objeto.id === this.id);
+	       if (indice !== -1) dbstorage.splice(indice, 1);
+	       localStorage.setItem(this.getAttribute("db_name"),JSON.stringify(dbstorage));
+
+	       this.dispatchEvent(new CustomEvent("updateCantidadStorage", { bubbles: true, composed: true }))
 	       this.remove();
 	    })
       }

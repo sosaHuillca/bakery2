@@ -9,7 +9,7 @@ body>header{
 
 #list{
    display:grid;
-   grid-template-columns:repeat(auto-fit,minmax(110px,1fr));
+   grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
    gap:10px;
 }
 
@@ -24,13 +24,13 @@ body>header{
 #view{
    height: 100vh;
   display: grid;
-  place-content: center;
+  place-items: center;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
-      background: rgba(0,0,0,.6);
+  background: rgba(0,0,0,.8);
 }
 
 btn-carrito.ocultar,
@@ -56,17 +56,17 @@ display:var(--display); }
    position:relative;
 
 }
-#save button{
+
+#cerarVentana{
+   border:none;
    position: absolute;
+   font-size:1.3rem;
+   right:30px;
+   top:-70px;
    width:45px;
    height:40px;
-   font-size:1.3rem;
-   right:10px;
-   top:-90px;
-
-   background: brown;
-  border: none;
   border-radius: 6px;
+   background: brown;
   color:white;
 }
 
@@ -74,25 +74,27 @@ display:var(--display); }
    display:grid;
    gap:30px;
    margin-top:40px;
+   grid-column:1/-1;
+}
+
+calc-total{
+   grid-row:2/3;
+   grid-column:1/-1;
+}
+#save div{
+   display:grid;
+   grid-template-columns:1fr 1fr;
+   gap:10px;
 }
 
 .fa-trash{
    font-size: 1.5rem;
 }
 
-.btnWhatsapp{
-   background: chartreuse;
-  padding: 5px;
-  display: grid;
-  border-radius: 10px;
-  color: indigo;
-  height: 40px;
-  width: 180px;
-  display:block;
-  margin-left:auto;
-  margin-right:auto;
-  text-align:center;
-  place-content: center;
-  cursor:pointer;
-   text-decoration:none;
+#seguirComprando{
+   background: darkseagreen;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  color:aliceblue;
 }
