@@ -109,19 +109,6 @@ img { width: 100%; height:100%; }
    height:40px;
   grid-row:4/5;
 }
-#borrar{
-  position: absolute;
-  width: 50px;
-  font-size: 1.3rem;
-  border-radius: 50%;
-  border: none;
-  height: 50px;
-  top: -25px;
-  left: -15px;
-  background:brown; 
-  color:white;
-  border:none;
-}
 
 .number-precio{
    font-weight:bold;
@@ -141,9 +128,6 @@ p{margin-top:0;}
 </style>
       <article class="content-product">
 	 <header class="head-product">
-	    <button id="borrar">
-	       <slot name="btn-cerrar"></slot>
-	    </button>
 	    <img id="imgMain" src="imagenes/${listImagen[0]}"/>
 	    <nav class="content-galery">
 	       <img src="imagenes/${listImagen[1]}"/>

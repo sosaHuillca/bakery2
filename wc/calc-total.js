@@ -9,7 +9,7 @@ window.customElements.define('calc-total',
 p {
    text-align:right;
    font-size:1.1rem;
-  margin:0;
+  width: 85%;
 }
 </style>
 <p>total = 0</p>
